@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1d4ed8">
+<title>SkillSwap Campus</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<main id="auth" class="auth">
+  <div class="card auth-card">
+    <h1>🔄 SkillSwap Campus</h1>
+    <p class="muted">Teach a skill you know. Learn one you want.</p>
+    <div class="tabs">
+      <button type="button" class="on" data-auth="login">Log in</button>
+      <button type="button" data-auth="register">Register</button>
+    </div>
+    <form id="loginForm" novalidate>
+      <label>Email<input id="lEmail" type="email" autocomplete="username"></label>
+      <label>Password<input id="lPass" type="password" autocomplete="current-password"></label>
+      <p class="err" id="lErr"></p>
+      <button class="btn wide">Log in</button>
+      <p class="muted small">Demo accounts: aisha@campus.edu or ravi@campus.edu, password demo123</p>
+    </form>
+    <form id="regForm" hidden novalidate>
+      <label>Full name<input id="rName" autocomplete="name"></label>
+      <label>Email<input id="rEmail" type="email" autocomplete="username"></label>
+      <label>Password (6+ characters)<input id="rPass" type="password" autocomplete="new-password"></label>
+      <p class="err" id="gErr"></p>
+      <button class="btn wide">Create account</button>
+      <p class="muted small">Use demo details only. Data stays in this browser.</p>
+    </form>
+  </div>
+</main>
+
+<div id="app" hidden>
+  <header class="top"><strong>🔄 SkillSwap Campus</strong><button id="logout" class="btn ghost small">Log out</button></header>
+  <nav id="nav" aria-label="Main">
+    <button class="on" data-view="dashboard"><span>🏠</span>Dashboard</button>
+    <button data-view="explore"><span>🔍</span>Explore</button>
+    <button data-view="myskills"><span>🎓</span>My Skills</button>
+    <button data-view="requests"><span>🔁</span>Requests</button>
+    <button data-view="profile"><span>👤</span>Profile</button>
+  </nav>
+
+  <section class="view" id="v-dashboard">
+    <h2 id="welcome"></h2>
+    <div class="stats" id="stats"></div>
+    <div class="two">
+      <div class="card"><h3>Recently added skills</h3><div id="recentSkills"></div></div>
+      <div class="card"><h3>Recent activity</h3><div id="activity"></div></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-explore" hidden>
+    <h2>Explore skills</h2>
+    <div class="bar">
+      <input id="q" type="search" placeholder="Search skills or students" aria-label="Search">
+      <select id="cat" aria-label="Category"></select>
+    </div>
+    <div class="grid" id="exploreList"></div>
+  </section>
+
+  <section class="view" id="v-myskills" hidden>
+    <div class="row"><h2>My skills</h2><button class="btn" id="addSkill">+ Add skill</button></div>
+    <div class="grid" id="mySkillList"></div>
+  </section>
+
+  <section class="view" id="v-requests" hidden>
+    <h2>Exchange requests</h2>
+    <h3>Incoming</h3><div id="incoming"></div>
+    <h3>Outgoing</h3><div id="outgoing"></div>
+  </section>
+
+  <section class="view" id="v-profile" hidden>
+    <h2>My profile</h2>
+    <div class="two">
+      <form class="card" id="profForm" novalidate>
+        <label>Name<input id="pName"></label>
+        <label>Email<input id="pEmail" readonly></label>
+        <label>About me<textarea id="pBio" placeholder="What do you study? What do you want to learn?"></textarea></label>
+        <button class="btn">Save profile</button>
+      </form>
+      <div class="card">
+        <h3>Skills I offer</h3><div id="profSkills"></div>
+        <h3 class="gap">Other students</h3><div id="peers"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<dialog id="skillDlg">
+  <form id="skillForm" novalidate>
+    <h3 id="skillHead">Add skill</h3>
+    <label>Title<input id="sTitle" maxlength="60"></label>
+    <label>Category<select id="sCat"></select></label>
+    <label>Level<select id="sLevel"></select></label>
+    <label>Description<textarea id="sDesc" maxlength="300"></textarea></label>
+    <p class="err" id="sErr"></p>
+    <div class="btns"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Save skill</button></div>
+  </form>
+</dialog>
+
+<dialog id="reqDlg">
+  <form id="reqForm" novalidate>
+    <h3>Request an exchange</h3>
+    <p id="reqInfo" class="muted"></p>
+    <label>What can you teach in return?<input id="rOffer" maxlength="80"></label>
+    <p class="err" id="qErr"></p>
+    <div class="btns"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Send request</button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
